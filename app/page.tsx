@@ -1,15 +1,11 @@
-import Image from "next/image";
 import { currentUser } from "@clerk/nextjs";
-import { UserButton } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
-
+import Navbar from "./components/Navbar";
 export default async function Home() {
   const user: userInfo | null = await currentUser();
 
   return (
-    <div>
-      <UserButton />
-      {user && user.id};
+    <div className="w-full min-h-screen bg-black/75 p-10 mx-auto">
+      <Navbar userName={user?.firstName} />
     </div>
   );
 }
