@@ -1,9 +1,14 @@
 // import React from "react";
+// import { currentUser } from "@clerk/nextjs";
+// import Navbar from "./Navbar";
+// import Chat from "./Chat";
+// const Container = async () => {
+//   const user: userInfo | null = await currentUser();
 
-// const Container = ({ children }) => {
 //   return (
-//     <div className="w-full max-w-[1700px] p-10 min-h-screen  bg-black">
-//       {children}
+//     <div className="min-h-screen  p-6 rounded-xl   bg-black">
+//       <Navbar userName={user?.firstName} />
+//       <Chat />
 //     </div>
 //   );
 // };

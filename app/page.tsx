@@ -1,11 +1,13 @@
 import { currentUser } from "@clerk/nextjs";
 import Navbar from "./components/Navbar";
+import Division from "./components/Division";
 export default async function Home() {
   const user: userInfo | null = await currentUser();
 
   return (
-    <div className="w-full min-h-screen bg-black/75 p-10 mx-auto">
+    <div className="min-h-screen      bg-black">
       <Navbar userName={user?.firstName} />
+      <Division userName={user?.firstName} />
     </div>
   );
 }
