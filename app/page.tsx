@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen      bg-black">
       <Navbar userName={user?.firstName} />
-      <Division />
+      <Division userName={user?.firstName} />
     </div>
   );
 }
