@@ -6,7 +6,7 @@ import Info from "../../../assets/icons/info.png";
 
 const userInfo = () => {
   return (
-    <div className="flex justify-between items-center border-b border-slate-400/10">
+    <div className="flex justify-between items-center pb-5 border-b border-slate-400/10">
       <div className="flex gap-4 items-center">
         <img
           src={Avatar}
