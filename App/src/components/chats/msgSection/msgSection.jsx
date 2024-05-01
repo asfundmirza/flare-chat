@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Bg from "../../../assets/icons/bg.jpg";
 const msgSection = () => {
+  const endMessgesRef = useRef(null);
+  useEffect(() => {
+    endMessgesRef.current.scrollIntoView({ behavior: "smooth" });
+  });
   return (
     <div className="flex flex-col gap-8 py-5 px-3 h-full w-full overflow-auto">
       <div className="flex max-w-[50%] w-auto">
@@ -43,7 +47,6 @@ const msgSection = () => {
         <div className="flex flex-col gap-4 bg-purple-500/30 p-2  rounded-lg h-auto">
           <div className="flex flex-col">
             <h2>User name</h2>
-            {/* <p className="text-xs break-words">message content message</p> */}
             <img src={Bg} alt="bg image" className=" object-cover" />
           </div>
 
@@ -52,6 +55,7 @@ const msgSection = () => {
           </div>
         </div>
       </div>
+      <div ref={endMessgesRef} />
     </div>
   );
 };
