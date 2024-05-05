@@ -5,7 +5,6 @@ import Wrapper from "../wrapper/Wrapper";
 
 const Dashboard = () => {
   return (
-    // Add parentheses around the returned JSX
     <Wrapper>
       <Lists />
       <Chats />
