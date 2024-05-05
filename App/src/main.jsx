@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import SignIn from "./components/sign-in/SignIn.jsx";
 import SignUp from "./components/sign-up/SignUp.jsx";
+import Dashboard from "./components/dashboard/Dashboard.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
         <Route index element={<Navigate to="/sign-in" />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
     </>
   )
