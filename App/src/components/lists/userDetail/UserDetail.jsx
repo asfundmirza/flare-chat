@@ -12,8 +12,15 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
 import { Button } from "../../../components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const UserDetail = () => {
+  const navigate = useNavigate();
+  const signOutHandler = () => {
+    localStorage.removeItem("flare-chat");
+
+    navigate("/sign-in");
+  };
   return (
     <div className="flex justify-between  items-center">
       <div className="flex gap-2 items-center text-xl">
@@ -35,7 +42,10 @@ const UserDetail = () => {
             />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem className="flex justify-center bg-black text-white outline-none border-none">
+            <DropdownMenuItem
+              className="flex justify-center bg-black text-white outline-none border-none"
+              onClick={signOutHandler}
+            >
               Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>
