@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "../../../assets/icons/avatar.png";
 import More from "../../../assets/icons/more.png";
 import Video from "../../../assets/icons/video.png";
@@ -10,8 +10,16 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../../../store";
+import Loader from "react-spinners/ClipLoader";
 
 const UserDetail = () => {
+  const { user, isLoggedIn, loading, fetchUserData, currentUserData } =
+    useStore();
+  useEffect(() => {
+    fetchUserData();
+  }, [isLoggedIn]);
+
   const navigate = useNavigate();
   const signOutHandler = () => {
     localStorage.removeItem("flare-chat");
@@ -20,14 +28,21 @@ const UserDetail = () => {
   };
   return (
     <div className="flex justify-between  items-center">
-      <div className="flex gap-2 items-center text-xl">
-        <img
-          src={Avatar}
-          alt="avatar"
-          className="w-[80px] h-[80px] rounded-full"
-        />
-        <h2>asfund mirza</h2>
-      </div>
+      {loading ? (
+        <div>
+          <Loader color="silver" className="w-10 h-10" />
+        </div>
+      ) : (
+        <div className="flex gap-2 items-center text-xl">
+          <img
+            src={currentUserData.profileImageUrl || Avatar}
+            alt="avatar"
+            className="w-[80px] h-[80px] rounded-full object-cover"
+          />
+
+          <h2>{currentUserData?.name}</h2>
+        </div>
+      )}
 
       <div className="flex gap-3 ">
         <DropdownMenu>
