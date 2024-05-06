@@ -17,6 +17,7 @@ import {
 import BeatLoader from "react-spinners/BeatLoader";
 import SignInBG from "../../assets/backgrounds/flare-bg.png";
 import Minus from "../../assets/icons/minus.png";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -27,10 +28,12 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [userNameError, setUserNameError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [downloadURL, setDownloadURL] = useState(null);
 
   const [firebaseError, setFirebaseError] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
   let navigate = useNavigate();
+  const storage = getStorage();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("flare-chat");
@@ -68,6 +71,17 @@ const SignUp = () => {
 
         return;
       }
+      const file = selectedFile;
+      if (file) {
+        // Create a reference to the storage location
+        const storageRef = ref(storage, `images/${file.name}`);
+
+        // Upload the file to Firebase Storage
+        await uploadBytes(storageRef, file);
+
+        // Get the download URL of the uploaded file
+        setDownloadURL(await getDownloadURL(storageRef));
+      }
 
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -87,6 +101,7 @@ const SignUp = () => {
         uid: user?.uid,
         name: user?.displayName,
         createdAt: serverTimestamp(),
+        profileImageUrl: downloadURL,
       });
 
       // Additional logic after successful registration
