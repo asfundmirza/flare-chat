@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Lists from "../lists/Lists";
 import ReceiverDetail from "../receiverDetail/ReceiverDetail";
 import Chats from "../chats/Chats";
 import DashboardBG from "../../assets/backgrounds/flare-bg.png";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  let navigate = useNavigate();
+  useEffect(() => {
+    const storedUser = localStorage.getItem("flare-chat");
+
+    if (!storedUser) {
+      navigate("/sign-in");
+    }
+  }, []);
   return (
     <div
       style={{
