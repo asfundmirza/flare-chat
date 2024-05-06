@@ -223,7 +223,7 @@ const SignUp = () => {
                     required
                   />{" "}
                   <input
-                    className="w-full p-[15px] border-b-2 bg-inherit mb-8 text-white outline-none placeholder-gray font-sans"
+                    className="w-full p-[15px] border-b-2 bg-inherit mb-4 text-white outline-none placeholder-gray font-sans"
                     id="confirm-password"
                     name="confirm-password"
                     type="password"
@@ -269,6 +269,17 @@ const SignUp = () => {
                       </span>
                     ) : null)
                   )}
+                  <div className="flex gap-4 w-full my-4">
+                    <div>
+                      <input
+                        type="file"
+                        className="text-white rounded-lg opacity-0 absolute "
+                      ></input>
+                      <div className="text-white cursor-pointer bg-transparent border p-1 rounded-lg">
+                        Upload Image
+                      </div>
+                    </div>
+                  </div>
                   <div className="w-full justify-center">
                     <button
                       type="submit"
