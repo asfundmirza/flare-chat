@@ -74,7 +74,10 @@ const SignUp = () => {
       const file = selectedFile;
       if (file) {
         // Create a reference to the storage location
-        const storageRef = ref(storage, `images/${file.name}`);
+        const storageRef = ref(
+          storage,
+          `images/${userName}/profile-image/${file.name}`
+        );
 
         // Upload the file to Firebase Storage
         await uploadBytes(storageRef, file);
