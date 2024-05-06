@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import BeatLoader from "react-spinners/BeatLoader";
 import SignInBG from "../../assets/backgrounds/flare-bg.png";
+import Minus from "../../assets/icons/minus.png";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -25,6 +26,7 @@ const SignUp = () => {
   const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
   const [userNameError, setUserNameError] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const [firebaseError, setFirebaseError] = useState("");
   const [pageLoading, setPageLoading] = useState(true);
@@ -102,7 +104,15 @@ const SignUp = () => {
       setFirebaseError(error.message);
     }
   };
-
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+  const removeFile = () => {
+    setSelectedFile(null);
+  };
   const nameChangeHandler = async (event) => {
     setUserName(event.target.value);
     setUserNameError("");
@@ -273,11 +283,36 @@ const SignUp = () => {
                     <div>
                       <input
                         type="file"
-                        className="text-white rounded-lg opacity-0 absolute "
-                      ></input>
-                      <div className="text-white cursor-pointer bg-transparent border p-1 rounded-lg">
-                        Upload Image
-                      </div>
+                        id="fileInput"
+                        className="absolute -top-10 left-0 opacity-0"
+                        onChange={handleFileChange}
+                        accept="image/*"
+                      />
+                      {selectedFile ? (
+                        <div className="flex gap-2 items-center">
+                          <img
+                            src={URL.createObjectURL(selectedFile)}
+                            alt="Selected Image"
+                            className="w-12 h-12 rounded-full object-cover object-center"
+                          />
+                          <span className="text-white">
+                            {selectedFile.name}
+                          </span>
+                          <img
+                            src={Minus}
+                            alt="remove"
+                            className="w-4 h-4 cursor-pointer"
+                            onClick={removeFile}
+                          />
+                        </div>
+                      ) : (
+                        <label
+                          htmlFor="fileInput"
+                          className="text-white cursor-pointer bg-transparent border p-1 rounded-lg"
+                        >
+                          Upload Image
+                        </label>
+                      )}
                     </div>
                   </div>
                   <div className="w-full justify-center">
