@@ -21,6 +21,7 @@ const useStore = create((set) => ({
       user: null,
       currentUserData: null,
       isLoggedIn: false,
+      addUserComponent: false,
     });
   },
   fetchUserData: async () => {
@@ -70,6 +71,36 @@ const useStore = create((set) => ({
     } catch (error) {
       console.log("Error fetching user data", error.message);
       set({ user: null, currentUserData: null, loading: false });
+    }
+  },
+  addFriend: async (friendUsername, currentUserData) => {
+    try {
+      //   if (user && isLoggedIn) {
+      //     const userRef = doc(db, "users", user?.displayName);
+      //   }
+      // Query Firestore collection for user with the entered username
+      const querySnapshot = await getDocs(collection(db, "users"));
+      querySnapshot?.forEach(async (document) => {
+        const userData = document?.data();
+        if (userData?.name === friendUsername) {
+          const currentUserRef = doc(
+            collection(db, "users"),
+            currentUserData?.name
+          );
+          const friendsRef = doc(collection(db, "users"), friendUsername);
+          const currentUserDocSnap = await getDoc(currentUserRef);
+          const friendsDocSnap = await getDoc(friendsRef);
+
+          console.log(currentUserDocSnap.data());
+          console.log(friendsDocSnap.data());
+
+          console.log(`Friend "${friendUsername}" added successfully!`);
+          return;
+        }
+      });
+      console.log("user not found");
+    } catch (error) {
+      console.error("Error adding friend:", error);
     }
   },
 }));

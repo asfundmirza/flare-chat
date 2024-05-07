@@ -105,6 +105,7 @@ const SignUp = () => {
         name: user?.displayName,
         createdAt: serverTimestamp(),
         profileImageUrl: downloadURL,
+        friends: [],
       });
 
       // Additional logic after successful registration
