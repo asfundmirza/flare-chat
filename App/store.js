@@ -15,6 +15,9 @@ const useStore = create((set) => ({
   isLoggedIn: false,
   loading: true,
   addUserComponent: false,
+  addingFriendsLoading: false,
+  addingUserError: null,
+  setAddingUserError: (value) => set({ addingUserError: value }),
   setAddUserComponent: (value) => set({ addUserComponent: value }),
   resetUserData: () => {
     set({
@@ -75,11 +78,19 @@ const useStore = create((set) => ({
   },
   addFriend: async (friendUsername, currentUserData) => {
     try {
+      set({
+        addingFriendsLoading: true,
+      });
       const userExists = (
         await getDoc(doc(db, "users", friendUsername))
       ).exists();
       if (!userExists) {
         console.log("User not found");
+        set({
+          addingFriendsLoading: false,
+          addUserComponent: true,
+          addingUserError: "User not found",
+        });
         return;
       }
       // Query Firestore collection for user with the entered username
@@ -100,6 +111,11 @@ const useStore = create((set) => ({
 
           if (friendAlreadyExists) {
             console.log("Friend already exists");
+            set({
+              addingFriendsLoading: false,
+              addUserComponent: true,
+              addingUserError: "Friend already exists",
+            });
             return;
           }
 
@@ -112,6 +128,10 @@ const useStore = create((set) => ({
           console.log(friendsDocSnap.data());
 
           console.log(`Friend "${friendUsername}" added successfully!`);
+          set({
+            addingFriendsLoading: false,
+            addUserComponent: false,
+          });
           return;
         }
       });
