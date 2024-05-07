@@ -11,10 +11,10 @@ import {
 } from "../../../components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../../../store";
-import Loader from "react-spinners/ClipLoader";
+import Loader from "react-spinners/BeatLoader";
 
 const UserDetail = ({ userData }) => {
-  const { resetUserData } = useStore();
+  const { addUserComponent, setAddUserComponent, resetUserData } = useStore();
 
   const navigate = useNavigate();
   const signOutHandler = () => {

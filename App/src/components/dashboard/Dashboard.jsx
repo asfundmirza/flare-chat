@@ -5,7 +5,7 @@ import Chats from "../chats/Chats";
 import DashboardBG from "../../assets/backgrounds/flare-bg.png";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../../store";
-import Loader from "react-spinners/ClipLoader";
+import Loader from "react-spinners/BeatLoader";
 import AddUser from "../addUser/AddUser";
 
 const Dashboard = () => {
