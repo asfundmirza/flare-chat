@@ -6,6 +6,7 @@ import DashboardBG from "../../assets/backgrounds/flare-bg.png";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../../store";
 import Loader from "react-spinners/ClipLoader";
+import AddUser from "../addUser/AddUser";
 
 const Dashboard = () => {
   const { user, isLoggedIn, loading, fetchUserData, currentUserData } =
@@ -34,11 +35,14 @@ const Dashboard = () => {
             backgroundPosition: "center",
           }}
         >
-          <div className="flex items-center  bg-black/30 backdrop-blur-sm justify-center h-screen">
+          <div className="relative flex items-center  bg-black/30 backdrop-blur-sm justify-center h-screen">
             <div className="container p-0 mx-auto flex h-[80vh]  bg-black/10  rounded-lg text-white backdrop-blur-sm border border-gray-400/10 ">
               <Lists currentUserData={currentUserData} />
               <Chats />
               <ReceiverDetail />
+            </div>
+            <div className="absolute">
+              <AddUser />
             </div>
           </div>
         </div>
