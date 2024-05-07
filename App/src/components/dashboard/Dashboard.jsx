@@ -9,8 +9,14 @@ import Loader from "react-spinners/ClipLoader";
 import AddUser from "../addUser/AddUser";
 
 const Dashboard = () => {
-  const { user, isLoggedIn, loading, fetchUserData, currentUserData } =
-    useStore();
+  const {
+    user,
+    isLoggedIn,
+    loading,
+    fetchUserData,
+    currentUserData,
+    addUserComponent,
+  } = useStore();
   let navigate = useNavigate();
   useEffect(() => {
     const storedUser = localStorage.getItem("flare-chat");
@@ -41,9 +47,11 @@ const Dashboard = () => {
               <Chats />
               <ReceiverDetail />
             </div>
-            <div className="absolute">
-              <AddUser />
-            </div>
+            {addUserComponent && (
+              <div className="absolute">
+                <AddUser />
+              </div>
+            )}
           </div>
         </div>
       )}

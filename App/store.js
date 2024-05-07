@@ -14,6 +14,8 @@ const useStore = create((set) => ({
   currentUserData: null,
   isLoggedIn: false,
   loading: true,
+  addUserComponent: false,
+  setAddUserComponent: (value) => set({ addUserComponent: value }),
   resetUserData: () => {
     set({
       user: null,

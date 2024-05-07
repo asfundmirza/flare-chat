@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import SearchIcon from "../../../assets/icons/search.png";
 import Add from "../../../assets/icons/plus.png";
 import Minus from "../../../assets/icons/minus.png";
+import useStore from "../../../../store";
 const Search = () => {
+  const { addUserComponent, setAddUserComponent } = useStore();
   const [plusButton, setPlusButton] = useState(true);
 
   const addButtonHandler = () => {
     setPlusButton(!plusButton);
+    setAddUserComponent(!addUserComponent);
   };
 
   return (
@@ -28,7 +31,7 @@ const Search = () => {
           onClick={addButtonHandler}
           className="bg-slate-400/10 p-2 rounded-lg cursor-pointer"
         >
-          {plusButton ? (
+          {!addUserComponent ? (
             <img src={Add} alt="addIcon" className="w-[10px] h-[10px]" />
           ) : (
             <img src={Minus} alt="addIcon" className="w-[10px] h-[10px]" />
