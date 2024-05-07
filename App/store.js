@@ -14,6 +14,13 @@ const useStore = create((set) => ({
   currentUserData: null,
   isLoggedIn: false,
   loading: true,
+  resetUserData: () => {
+    set({
+      user: null,
+      currentUserData: null,
+      isLoggedIn: false,
+    });
+  },
   fetchUserData: async () => {
     try {
       auth.onAuthStateChanged(async (currentUser) => {
@@ -33,14 +40,6 @@ const useStore = create((set) => ({
           const docSnap = await getDoc(userRef);
 
           if (docSnap.exists()) {
-            //   const userData = {
-            //     createdAt: docSnap.data().createdAt,
-            //     email: docSnap.data().email,
-            //     name: docSnap.data().name,
-            //     profileImageUrl: docSnap.data().profileImageUrl,
-            //     uid: currentUser.uid, // Use the user's UID from Firebase Auth
-            //   };
-
             set({
               user: currentUser,
               currentUserData: docSnap?.data(),

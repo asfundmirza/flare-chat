@@ -3,11 +3,11 @@ import UserDetail from "./userDetail/UserDetail";
 import Search from "./searchSection/Search";
 import UserList from "./userList/userList";
 import "./Lists.css";
-const Lists = () => {
+const Lists = ({ currentUserData }) => {
   return (
     <div className="flex flex-1 flex-col overflow-auto p-5 h-full gap-[20px]">
       <div>
-        <UserDetail />
+        <UserDetail userData={currentUserData} />
       </div>
       <div>
         <Search />

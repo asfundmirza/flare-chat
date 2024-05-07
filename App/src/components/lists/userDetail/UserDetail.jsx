@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "../../../assets/icons/avatar.png";
 import More from "../../../assets/icons/more.png";
 import Video from "../../../assets/icons/video.png";
@@ -13,34 +13,30 @@ import { useNavigate } from "react-router-dom";
 import useStore from "../../../../store";
 import Loader from "react-spinners/ClipLoader";
 
-const UserDetail = () => {
-  const { user, isLoggedIn, loading, fetchUserData, currentUserData } =
-    useStore();
-  useEffect(() => {
-    fetchUserData();
-  }, [isLoggedIn]);
+const UserDetail = ({ userData }) => {
+  const { resetUserData } = useStore();
 
   const navigate = useNavigate();
   const signOutHandler = () => {
     localStorage.removeItem("flare-chat");
-
+    resetUserData();
     navigate("/sign-in");
   };
   return (
     <div className="flex justify-between  items-center">
-      {loading ? (
-        <div>
-          <Loader color="silver" className="w-10 h-10" />
-        </div>
-      ) : (
+      {userData ? (
         <div className="flex gap-2 items-center text-xl">
           <img
-            src={currentUserData.profileImageUrl || Avatar}
+            src={userData?.profileImageUrl || Avatar}
             alt="avatar"
             className="w-[80px] h-[80px] rounded-full object-cover"
           />
 
-          <h2>{currentUserData?.name}</h2>
+          <h2>{userData?.name}</h2>
+        </div>
+      ) : (
+        <div>
+          <Loader color="silver" className="w-4 h-4" />
         </div>
       )}
 
