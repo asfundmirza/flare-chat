@@ -35,8 +35,8 @@ const UserDetail = ({ userData }) => {
           <h2>{userData?.name}</h2>
         </div>
       ) : (
-        <div>
-          <Loader color="silver" className="w-4 h-4" />
+        <div className="flex">
+          <Loader color="silver" className="w-12 h-12" />
         </div>
       )}
 

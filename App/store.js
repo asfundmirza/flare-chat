@@ -14,6 +14,7 @@ const useStore = create((set) => ({
   currentUserData: null,
   isLoggedIn: false,
   loading: true,
+  friendsList: null,
   addUserComponent: false,
   addingFriendsLoading: false,
   addingUserError: null,
@@ -137,6 +138,19 @@ const useStore = create((set) => ({
       });
     } catch (error) {
       console.error("Error adding friend:", error);
+    }
+  },
+  fetchingFriendsList: async (user) => {
+    try {
+      const userRef = doc(db, "users", user?.displayName);
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists() && docSnap?.data()?.friends) {
+        set({
+          friendsList: docSnap?.data()?.friends,
+        });
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   },
 }));
