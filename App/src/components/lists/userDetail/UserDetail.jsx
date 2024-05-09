@@ -14,7 +14,7 @@ import useStore from "../../../../store";
 import Loader from "react-spinners/BeatLoader";
 
 const UserDetail = ({ userData }) => {
-  const { addUserComponent, setAddUserComponent, resetUserData } = useStore();
+  const { resetUserData } = useStore();
 
   const navigate = useNavigate();
   const signOutHandler = () => {

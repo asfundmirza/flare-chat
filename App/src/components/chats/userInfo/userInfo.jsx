@@ -8,7 +8,6 @@ import Loader from "react-spinners/BeatLoader";
 
 const userInfo = () => {
   const { activeFriend } = useStore();
-  console.log(activeFriend);
   return (
     <div className="flex justify-between items-center pb-5 border-b border-slate-400/10">
       {activeFriend ? (

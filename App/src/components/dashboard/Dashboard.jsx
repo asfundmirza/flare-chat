@@ -45,7 +45,7 @@ const Dashboard = () => {
             <div className="container p-0 mx-auto flex h-[80vh]  bg-black/10  rounded-lg text-white backdrop-blur-sm border border-gray-400/10 ">
               <Lists currentUserData={currentUserData} />
 
-              <Chats />
+              <Chats currentUserData={currentUserData} />
               <ReceiverDetail />
             </div>
             {addUserComponent && (
