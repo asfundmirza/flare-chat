@@ -3,18 +3,20 @@ import Avatar from "../../../assets/icons/avatar.png";
 import Phone from "../../../assets/icons/phone.png";
 import Video from "../../../assets/icons/video.png";
 import Info from "../../../assets/icons/info.png";
-
+import useStore from "../../../../store";
 const userInfo = () => {
+  const { activeFriend } = useStore();
+  console.log(activeFriend);
   return (
     <div className="flex justify-between items-center pb-5 border-b border-slate-400/10">
       <div className="flex gap-4 items-center">
         <img
-          src={Avatar}
+          src={activeFriend?.profileImageUrl || Avatar}
           alt="avatar"
           className="rounded-full w-[60px] h-[60px]"
         />
         <div className="flex flex-col ">
-          <h2>user name</h2>
+          <h2>{activeFriend?.name}</h2>
           <p className=" text-xs text-gray-400/40">user description</p>
         </div>
       </div>

@@ -18,6 +18,8 @@ const useStore = create((set) => ({
   addUserComponent: false,
   addingFriendsLoading: false,
   addingUserError: null,
+  activeFriend: null,
+  setActiveFriend: (value) => set({ activeFriend: value }),
   setAddingUserError: (value) => set({ addingUserError: value }),
   setAddUserComponent: (value) => set({ addUserComponent: value }),
   resetUserData: () => {
@@ -143,19 +145,6 @@ const useStore = create((set) => ({
       });
     } catch (error) {
       console.error("Error adding friend:", error);
-    }
-  },
-  fetchingFriendsList: async (user) => {
-    try {
-      const userRef = doc(db, "users", user?.displayName);
-      const docSnap = await getDoc(userRef);
-      if (docSnap.exists() && docSnap?.data()?.friends) {
-        set({
-          friendsList: docSnap?.data()?.friends,
-        });
-      }
-    } catch (error) {
-      console.log(error.message);
     }
   },
 }));
