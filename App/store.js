@@ -28,6 +28,7 @@ const useStore = create((set) => ({
       currentUserData: null,
       isLoggedIn: false,
       addUserComponent: false,
+      activeFriend: null,
     });
   },
   fetchUserData: async () => {

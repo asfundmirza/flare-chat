@@ -4,22 +4,31 @@ import Phone from "../../../assets/icons/phone.png";
 import Video from "../../../assets/icons/video.png";
 import Info from "../../../assets/icons/info.png";
 import useStore from "../../../../store";
+import Loader from "react-spinners/BeatLoader";
+
 const userInfo = () => {
   const { activeFriend } = useStore();
   console.log(activeFriend);
   return (
     <div className="flex justify-between items-center pb-5 border-b border-slate-400/10">
-      <div className="flex gap-4 items-center">
-        <img
-          src={activeFriend?.profileImageUrl || Avatar}
-          alt="avatar"
-          className="rounded-full w-[60px] h-[60px]"
-        />
-        <div className="flex flex-col ">
-          <h2>{activeFriend?.name}</h2>
-          <p className=" text-xs text-gray-400/40">user description</p>
+      {activeFriend ? (
+        <div className="flex gap-4 items-center">
+          <img
+            src={activeFriend?.profileImageUrl || Avatar}
+            alt="avatar"
+            className="rounded-full w-[60px] h-[60px]"
+          />
+          <div className="flex flex-col ">
+            <h2>{activeFriend?.name}</h2>
+            <p className=" text-xs text-gray-400/40">user description</p>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex">
+          <Loader color="silver" className="w-12 h-12" />
+        </div>
+      )}
+
       <div className="flex gap-4 items-center">
         <img
           src={Phone}
