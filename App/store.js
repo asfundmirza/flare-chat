@@ -129,10 +129,15 @@ const useStore = create((set) => ({
           console.log(friendsDocSnap.data());
 
           console.log(`Friend "${friendUsername}" added successfully!`);
-          set({
+          set((state) => ({
+            ...state,
+            currentUserData: {
+              ...state.currentUserData,
+              friends: updatedFriends,
+            },
             addingFriendsLoading: false,
             addUserComponent: false,
-          });
+          }));
           return;
         }
       });

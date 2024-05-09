@@ -36,7 +36,9 @@ const userList = ({ userData }) => {
               </div>
             ))
           ) : (
-            <span>No friends</span>
+            <span className="flex justify-center w-full items-center">
+              No friends
+            </span>
           )}
         </div>
       )}
