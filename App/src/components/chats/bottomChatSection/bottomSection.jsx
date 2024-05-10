@@ -4,10 +4,13 @@ import Camera from "../../../assets/icons/camera.png";
 import Mic from "../../../assets/icons/mic.png";
 import Emoji from "../../../assets/icons/emoji.png";
 import EmojiPicker from "emoji-picker-react";
-
+import useStore from "../../../../store";
 const bottomSection = () => {
+  const { activeFriend } = useStore();
+
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [messageInput, setMessageInput] = useState("");
+  const [messageContent, setMessageContent] = useState("");
 
   const toggleEmojiPicker = () => {
     setIsEmojiPickerOpen(!isEmojiPickerOpen);
@@ -15,6 +18,12 @@ const bottomSection = () => {
   const onEmojiClick = (event) => {
     setMessageInput((prev) => prev + event.emoji);
     setIsEmojiPickerOpen(false);
+  };
+  const messageInputHandler = () => {
+    setMessageContent(messageInput);
+    setMessageInput("");
+    console.log(activeFriend);
+    console.log(messageInput);
   };
 
   return (
@@ -61,7 +70,10 @@ const bottomSection = () => {
             />
           </div>
         </div>
-        <button className="p-2 px-4 bg-purple-500/30 hover:bg-purple-800 rounded-lg text-sm">
+        <button
+          onClick={messageInputHandler}
+          className="p-2 px-4 bg-purple-500/30 hover:bg-purple-800 rounded-lg text-sm"
+        >
           Send
         </button>
       </div>
