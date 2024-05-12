@@ -8,6 +8,7 @@ import {
   updateDoc,
   arrayUnion,
   onSnapshot,
+  serverTimestamp,
 } from "firebase/firestore";
 const useStore = create((set) => ({
   user: null,
@@ -147,6 +148,28 @@ const useStore = create((set) => ({
     } catch (error) {
       console.error("Error adding friend:", error);
     }
+  },
+  sendingMessage: async (receiverFriend, messageContent, currentUserData) => {
+    const currentUserRef = doc(collection(db, "users"), currentUserData?.name);
+    const updatedMessageData = [
+      {
+        messagesTo: [
+          {
+            name: receiverFriend?.name,
+            message: [messageContent],
+          },
+        ],
+        messagesFrom: {},
+      },
+    ];
+    await updateDoc(currentUserRef, { messages: updatedMessageData });
+    set((state) => ({
+      ...state,
+      currentUserData: {
+        ...state.currentUserData,
+        messages: updatedMessageData,
+      },
+    }));
   },
 }));
 export default useStore;

@@ -106,6 +106,13 @@ const SignUp = () => {
         createdAt: serverTimestamp(),
         profileImageUrl: downloadURL,
         friends: [],
+        messages: [
+          {
+            messagesTo: [],
+
+            messagesFrom: [],
+          },
+        ],
       });
 
       // Additional logic after successful registration

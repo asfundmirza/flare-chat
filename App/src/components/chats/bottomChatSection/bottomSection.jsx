@@ -6,7 +6,7 @@ import Emoji from "../../../assets/icons/emoji.png";
 import EmojiPicker from "emoji-picker-react";
 import useStore from "../../../../store";
 const bottomSection = () => {
-  const { activeFriend } = useStore();
+  const { activeFriend, sendingMessage, currentUserData } = useStore();
 
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [messageInput, setMessageInput] = useState("");
@@ -20,7 +20,7 @@ const bottomSection = () => {
     setIsEmojiPickerOpen(false);
   };
   const messageInputHandler = () => {
-    setMessageContent(messageInput);
+    sendingMessage(activeFriend, messageInput, currentUserData);
     setMessageInput("");
     console.log(activeFriend);
     console.log(messageInput);
