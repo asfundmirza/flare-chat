@@ -10,21 +10,21 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(false);
 
   const [firebaseError, setFirebaseError] = useState("");
 
   let navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("flare-chat");
+  // useEffect(() => {
+  // const storedUser = localStorage.getItem("flare-chat");
 
-    if (storedUser) {
-      navigate("/dashboard");
-    } else {
-      setPageLoading(false);
-    }
-  }, []);
+  //   if (storedUser) {
+  //     navigate("/dashboard");
+  //   } else {
+  //     setPageLoading(false);
+  //   }
+  // }, []);
   const login = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(

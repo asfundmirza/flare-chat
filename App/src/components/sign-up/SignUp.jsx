@@ -31,19 +31,19 @@ const SignUp = () => {
   const [downloadURL, setDownloadURL] = useState(null);
 
   const [firebaseError, setFirebaseError] = useState("");
-  const [pageLoading, setPageLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(false);
   let navigate = useNavigate();
   const storage = getStorage();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("flare-chat");
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem("flare-chat");
 
-    if (storedUser) {
-      navigate("/dashboard");
-    } else {
-      setPageLoading(false);
-    }
-  }, []);
+  //   if (storedUser) {
+  //     navigate("/dashboard");
+  //   } else {
+  //     setPageLoading(false);
+  //   }
+  // }, []);
 
   const register = async () => {
     try {
@@ -105,14 +105,6 @@ const SignUp = () => {
         name: user?.displayName,
         createdAt: serverTimestamp(),
         profileImageUrl: downloadURL,
-        friends: [],
-        messages: [
-          {
-            messagesTo: [],
-
-            messagesFrom: [],
-          },
-        ],
       });
 
       // Additional logic after successful registration

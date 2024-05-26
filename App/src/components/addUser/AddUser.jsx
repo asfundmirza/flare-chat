@@ -1,25 +1,10 @@
 import React, { useState } from "react";
-import useStore from "../../../store";
 import BeatLoader from "react-spinners/BeatLoader";
 
 const AddUser = () => {
-  const {
-    user,
-    addUserComponent,
-    setAddUserComponent,
-    addFriend,
-    currentUserData,
-    addingFriendsLoading,
-    addingUserError,
-    setAddingUserError,
-  } = useStore();
   const [friendUserName, setFriendUserName] = useState("");
-  const cancelButtonHandler = () => {
-    setAddUserComponent(!addUserComponent);
-  };
-  const addButtonHandler = () => {
-    addFriend(friendUserName, currentUserData);
-  };
+  const cancelButtonHandler = () => {};
+  const addButtonHandler = () => {};
   const userNameHandler = (e) => {
     setAddingUserError("");
     setFriendUserName(e.target.value);
@@ -33,9 +18,6 @@ const AddUser = () => {
           placeholder="Enter Username"
           onChange={userNameHandler}
         />
-        {addingUserError && (
-          <span className="text-xs text-red-500">{addingUserError}</span>
-        )}
       </div>
       <div className="flex justify-between text-white">
         <button
@@ -48,11 +30,7 @@ const AddUser = () => {
           onClick={addButtonHandler}
           className="p-2 px-6 bg-purple-500/30 hover:bg-purple-800 rounded-lg text-sm"
         >
-          {addingFriendsLoading ? (
-            <BeatLoader size="4.7px" color="#060022" />
-          ) : (
-            "Add"
-          )}
+          Add
         </button>
       </div>
     </div>

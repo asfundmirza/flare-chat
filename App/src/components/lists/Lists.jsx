@@ -5,18 +5,18 @@ import UserList from "./userList/userList";
 import "./Lists.css";
 import Loader from "react-spinners/BeatLoader";
 
-const Lists = ({ currentUserData }) => {
+const Lists = () => {
   return (
     <>
       <div className="flex flex-1 flex-col overflow-auto p-5 h-full gap-[20px]">
         <div>
-          <UserDetail userData={currentUserData} />
+          <UserDetail />
         </div>
         <div>
           <Search />
         </div>
         <div>
-          <UserList userData={currentUserData} />
+          <UserList />
         </div>
       </div>
     </>

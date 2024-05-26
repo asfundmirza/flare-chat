@@ -10,35 +10,20 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
-import useStore from "../../../../store";
 import Loader from "react-spinners/BeatLoader";
 
-const UserDetail = ({ userData }) => {
-  const { resetUserData } = useStore();
-
-  const navigate = useNavigate();
-  const signOutHandler = () => {
-    localStorage.removeItem("flare-chat");
-    resetUserData();
-    navigate("/sign-in");
-  };
+const UserDetail = () => {
   return (
     <div className="flex justify-between  items-center">
-      {userData ? (
-        <div className="flex gap-2 items-center text-xl">
-          <img
-            src={userData?.profileImageUrl || Avatar}
-            alt="avatar"
-            className="w-[80px] h-[80px] rounded-full object-cover"
-          />
+      <div className="flex gap-2 items-center text-xl">
+        <img
+          src={Avatar}
+          alt="avatar"
+          className="w-[80px] h-[80px] rounded-full object-cover"
+        />
 
-          <h2>{userData?.name}</h2>
-        </div>
-      ) : (
-        <div className="flex">
-          <Loader color="silver" className="w-12 h-12" />
-        </div>
-      )}
+        <h2>username</h2>
+      </div>
 
       <div className="flex gap-3 ">
         <DropdownMenu>
@@ -52,7 +37,7 @@ const UserDetail = ({ userData }) => {
           <DropdownMenuContent>
             <DropdownMenuItem
               className="flex justify-center bg-black text-white outline-none border-none"
-              onClick={signOutHandler}
+              // onClick={signOutHandler}
             >
               Sign out
             </DropdownMenuItem>

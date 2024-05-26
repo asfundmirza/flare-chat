@@ -4,10 +4,7 @@ import Camera from "../../../assets/icons/camera.png";
 import Mic from "../../../assets/icons/mic.png";
 import Emoji from "../../../assets/icons/emoji.png";
 import EmojiPicker from "emoji-picker-react";
-import useStore from "../../../../store";
 const bottomSection = () => {
-  const { activeFriend, sendingMessage, currentUserData } = useStore();
-
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [messageInput, setMessageInput] = useState("");
   const [messageContent, setMessageContent] = useState("");
@@ -20,10 +17,7 @@ const bottomSection = () => {
     setIsEmojiPickerOpen(false);
   };
   const messageInputHandler = () => {
-    sendingMessage(activeFriend, messageInput, currentUserData);
     setMessageInput("");
-    console.log(activeFriend);
-    console.log(messageInput);
   };
 
   return (
