@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
-
+import useStore from "../../../store";
 const AddUser = () => {
+  const { setAddMode, addMode } = useStore();
   const [friendUserName, setFriendUserName] = useState("");
-  const cancelButtonHandler = () => {};
+  const cancelButtonHandler = () => {
+    setAddMode(!addMode);
+  };
   const addButtonHandler = () => {};
   const userNameHandler = (e) => {
     setAddingUserError("");

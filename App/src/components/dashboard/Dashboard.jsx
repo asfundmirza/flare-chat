@@ -6,8 +6,9 @@ import DashboardBG from "../../assets/backgrounds/flare-bg.png";
 import { useNavigate } from "react-router-dom";
 import Loader from "react-spinners/BeatLoader";
 import AddUser from "../addUser/AddUser";
-
+import useStore from "../../../store";
 const Dashboard = () => {
+  const { addMode } = useStore();
   return (
     <>
       {/* <div className="flex w-full min-h-screen justify-center items-center bg-black">
@@ -29,10 +30,11 @@ const Dashboard = () => {
             <Chats />
             <ReceiverDetail />
           </div>
-
-          <div className="absolute">
-            <AddUser />
-          </div>
+          {addMode && (
+            <div className="absolute">
+              <AddUser />
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import SearchIcon from "../../../assets/icons/search.png";
 import Add from "../../../assets/icons/plus.png";
 import Minus from "../../../assets/icons/minus.png";
+import useStore from "../../../../store";
 const Search = () => {
+  const { setAddMode, addMode } = useStore();
+
+  const addButtonHandler = () => {
+    setAddMode(!addMode);
+  };
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center gap-3">
@@ -19,12 +25,14 @@ const Search = () => {
           />
         </div>
         <div
-          // onClick={addButtonHandler}
+          onClick={addButtonHandler}
           className="bg-slate-400/10 p-2 rounded-lg cursor-pointer"
         >
-          <img src={Add} alt="addIcon" className="w-[10px] h-[10px]" />
-
-          {/* <img src={Minus} alt="addIcon" className="w-[10px] h-[10px]" /> */}
+          {addMode ? (
+            <img src={Minus} alt="addIcon" className="w-[10px] h-[10px]" />
+          ) : (
+            <img src={Add} alt="addIcon" className="w-[10px] h-[10px]" />
+          )}
         </div>
       </div>
       <span className=" border-b border-b-slate-400/10"></span>
