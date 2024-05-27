@@ -44,7 +44,7 @@ const SignUp = () => {
       querySnapshot?.forEach((doc) => {
         const data = doc?.data();
         if (data?.username && data?.username === userName) {
-          setUserNameError("Dexhero already exists");
+          setUserNameError("username already exists");
           isUserNameUnique = false;
           return;
         }
