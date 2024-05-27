@@ -17,7 +17,7 @@ import {
 import BeatLoader from "react-spinners/BeatLoader";
 import SignInBG from "../../assets/backgrounds/flare-bg.png";
 import Minus from "../../assets/icons/minus.png";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import upload from "../../../upload";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -33,7 +33,6 @@ const SignUp = () => {
   const [firebaseError, setFirebaseError] = useState("");
   const [pageLoading, setPageLoading] = useState(false);
   let navigate = useNavigate();
-  const storage = getStorage();
 
   // useEffect(() => {
   //   const storedUser = localStorage.getItem("flare-chat");
@@ -55,7 +54,7 @@ const SignUp = () => {
       querySnapshot?.forEach((doc) => {
         const data = doc?.data();
         if (data?.name && data?.name === userName) {
-          setUserNameError("Dexhero already exists");
+          setUserNameError("username already exists");
           isUserNameUnique = false;
           return;
         }
@@ -71,52 +70,64 @@ const SignUp = () => {
 
         return;
       }
-      const file = selectedFile;
-      if (file) {
-        // Create a reference to the storage location
-        const storageRef = ref(
-          storage,
-          `images/${userName}/profile-image/${file.name}`
-        );
+      // const file = selectedFile;
+      // if (file) {
+      //   // Create a reference to the storage location
+      //   const storageRef = ref(
+      //     storage,
+      //     `images/${userName}/profile-image/${file.name}`
+      //   );
 
-        // Upload the file to Firebase Storage
-        await uploadBytes(storageRef, file);
+      //   // Upload the file to Firebase Storage
+      //   await uploadBytes(storageRef, file);
 
-        // Get the download URL of the uploaded file
-        setDownloadURL(await getDownloadURL(storageRef));
-      }
+      //   // Get the download URL of the uploaded file
+      //   setDownloadURL(await getDownloadURL(storageRef));
+      // }
 
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      const user = userCredential?.user;
-      await updateProfile(user, {
-        displayName: userName,
+      const imageUrl = await upload(selectedFile);
+      await setDoc(doc(db, "users", userCredential?.user?.uid), {
+        username: userName,
+        email: email,
+        id: userCredential?.user?.uid,
+        avatar: imageUrl,
+        blocked: [],
       });
-
-      const newUserRef = doc(collection(db, "users"), user?.displayName);
-
-      // Set new user's document in Firestore
-      await setDoc(newUserRef, {
-        email: user?.email,
-        uid: user?.uid,
-        name: user?.displayName,
-        createdAt: serverTimestamp(),
-        profileImageUrl: downloadURL,
+      await setDoc(doc(db, "userchats", userCredential?.user?.uid), {
+        chats: [],
       });
+      // const user = userCredential?.user;
+      // await updateProfile(user, {
+      //   displayName: userName,
+      // });
 
-      // Additional logic after successful registration
-      localStorage.setItem(
-        "flare-chat",
-        JSON.stringify({
-          email: user?.email,
-          uid: user?.uid,
-          name: user?.displayName,
-        })
-      );
-      navigate("/dashboard");
+      // const newUserRef = doc(collection(db, "users"), user?.displayName);
+
+      // // Set new user's document in Firestore
+      // await setDoc(newUserRef, {
+      //   email: user?.email,
+      //   uid: user?.uid,
+      //   name: user?.displayName,
+      //   createdAt: serverTimestamp(),
+      //   profileImageUrl: downloadURL,
+      // });
+
+      // // Additional logic after successful registration
+      // localStorage.setItem(
+      //   "flare-chat",
+      //   JSON.stringify({
+      //     email: user?.email,
+      //     uid: user?.uid,
+      //     name: user?.displayName,
+      //   })
+      // );
+      // navigate("/dashboard");
+      console.log("account created successfully");
     } catch (error) {
       console.log(error.message);
       setFirebaseError(error.message);
