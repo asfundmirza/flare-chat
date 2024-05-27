@@ -4,16 +4,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../firebase";
-import {
-  doc,
-  setDoc,
-  collection,
-  updateDoc,
-  getDoc,
-  arrayUnion,
-  serverTimestamp,
-  getDocs,
-} from "firebase/firestore";
+import { doc, setDoc, collection, getDocs } from "firebase/firestore";
 import BeatLoader from "react-spinners/BeatLoader";
 import SignInBG from "../../assets/backgrounds/flare-bg.png";
 import Minus from "../../assets/icons/minus.png";
@@ -46,15 +37,14 @@ const SignUp = () => {
 
   const register = async () => {
     try {
-      // Flag to indicate if userName is unique
       let isUserNameUnique = true;
 
       // Unique userName check
       const querySnapshot = await getDocs(collection(db, "users"));
       querySnapshot?.forEach((doc) => {
         const data = doc?.data();
-        if (data?.name && data?.name === userName) {
-          setUserNameError("username already exists");
+        if (data?.username && data?.username === userName) {
+          setUserNameError("Dexhero already exists");
           isUserNameUnique = false;
           return;
         }
@@ -70,27 +60,16 @@ const SignUp = () => {
 
         return;
       }
-      // const file = selectedFile;
-      // if (file) {
-      //   // Create a reference to the storage location
-      //   const storageRef = ref(
-      //     storage,
-      //     `images/${userName}/profile-image/${file.name}`
-      //   );
-
-      //   // Upload the file to Firebase Storage
-      //   await uploadBytes(storageRef, file);
-
-      //   // Get the download URL of the uploaded file
-      //   setDownloadURL(await getDownloadURL(storageRef));
-      // }
 
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      const imageUrl = await upload(selectedFile);
+      let imageUrl = "";
+      if (selectedFile) {
+        imageUrl = await upload(selectedFile);
+      }
       await setDoc(doc(db, "users", userCredential?.user?.uid), {
         username: userName,
         email: email,
@@ -101,32 +80,7 @@ const SignUp = () => {
       await setDoc(doc(db, "userchats", userCredential?.user?.uid), {
         chats: [],
       });
-      // const user = userCredential?.user;
-      // await updateProfile(user, {
-      //   displayName: userName,
-      // });
 
-      // const newUserRef = doc(collection(db, "users"), user?.displayName);
-
-      // // Set new user's document in Firestore
-      // await setDoc(newUserRef, {
-      //   email: user?.email,
-      //   uid: user?.uid,
-      //   name: user?.displayName,
-      //   createdAt: serverTimestamp(),
-      //   profileImageUrl: downloadURL,
-      // });
-
-      // // Additional logic after successful registration
-      // localStorage.setItem(
-      //   "flare-chat",
-      //   JSON.stringify({
-      //     email: user?.email,
-      //     uid: user?.uid,
-      //     name: user?.displayName,
-      //   })
-      // );
-      // navigate("/dashboard");
       console.log("account created successfully");
     } catch (error) {
       console.log(error.message);
