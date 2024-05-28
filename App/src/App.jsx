@@ -16,17 +16,16 @@ const App = () => {
       if (user) {
         fetchUserInfo(user.uid);
       } else {
-        fetchUserInfo(null); // If user is not authenticated, set currentUser to null
+        fetchUserInfo(null);
       }
     });
     return () => {
       unSub();
     };
   }, [fetchUserInfo]);
-  console.log(currentUser);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Display a loading indicator while fetching user info
+    return <div>Loading...</div>;
   }
 
   return (

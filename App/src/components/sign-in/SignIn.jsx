@@ -5,7 +5,7 @@ import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import BeatLoader from "react-spinners/BeatLoader";
 import SignInBG from "../../assets/backgrounds/flare-bg.png";
-
+import { useUserStore } from "../../../userStore";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +13,7 @@ const SignIn = () => {
   const [pageLoading, setPageLoading] = useState(false);
 
   const [firebaseError, setFirebaseError] = useState("");
-
+  const { isLoading } = useUserStore();
   const login = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -52,7 +52,7 @@ const SignIn = () => {
         }}
       >
         <div className="flex w-full h-screen bg-black/60 backdrop-blur-sm items-center justify-center">
-          {pageLoading ? (
+          {isLoading ? (
             <div className="flex w-full min-h-screen justify-center items-center">
               <BeatLoader color={"#FFFFFF"} />
             </div>
