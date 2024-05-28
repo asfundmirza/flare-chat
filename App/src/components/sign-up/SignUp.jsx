@@ -25,16 +25,6 @@ const SignUp = () => {
   const [pageLoading, setPageLoading] = useState(false);
   let navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem("flare-chat");
-
-  //   if (storedUser) {
-  //     navigate("/dashboard");
-  //   } else {
-  //     setPageLoading(false);
-  //   }
-  // }, []);
-
   const register = async () => {
     try {
       let isUserNameUnique = true;

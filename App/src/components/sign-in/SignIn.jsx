@@ -14,41 +14,12 @@ const SignIn = () => {
 
   const [firebaseError, setFirebaseError] = useState("");
 
-  let navigate = useNavigate();
-
-  // useEffect(() => {
-  // const storedUser = localStorage.getItem("flare-chat");
-
-  //   if (storedUser) {
-  //     navigate("/dashboard");
-  //   } else {
-  //     setPageLoading(false);
-  //   }
-  // }, []);
   const login = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      const user = userCredential.user;
-      localStorage.setItem(
-        "flare-chat",
-        JSON.stringify({
-          email: user.email,
-          uid: user.uid,
-          name: user.displayName,
-        })
-      );
-
-      navigate("/dashboard");
-      // setLoading(false);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       console.log(error.message);
       setFirebaseError(error.message);
-      // setLoading(false);
     }
   };
   const emailHandler = async function (event) {
