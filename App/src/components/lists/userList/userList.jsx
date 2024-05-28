@@ -4,9 +4,11 @@ import Loader from "react-spinners/BeatLoader";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { useUserStore } from "../../../../userStore";
+import { useChatStore } from "../../../../chatStore";
+
 const userList = () => {
   const { currentUser } = useUserStore();
-
+  const { changeChat } = useChatStore();
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
@@ -34,11 +36,17 @@ const userList = () => {
       unSub();
     };
   }, [currentUser.id]);
+
+  const handleClick = async (chat) => {
+    changeChat(chat.chatId, chat.user);
+  };
+
   return (
     <>
       <div className="flex flex-col gap-2 h-full overflow-auto ">
         {chats?.map((chat) => (
           <div
+            onClick={() => handleClick(chat)}
             key={chat.chatId}
             className={`flex bg-slate-400/10 hover:bg-slate-500/30   cursor-pointer p-3 rounded-xl gap-3 items-center`}
           >
