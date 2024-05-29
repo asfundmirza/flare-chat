@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import Loader from "react-spinners/BeatLoader";
 import AddUser from "../addUser/AddUser";
 import useStore from "../../../store";
+import { useChatStore } from "../../../chatStore";
 const Dashboard = () => {
   const { addMode } = useStore();
+  const { chatId } = useChatStore();
   return (
     <>
       {/* <div className="flex w-full min-h-screen justify-center items-center bg-black">
@@ -27,8 +29,8 @@ const Dashboard = () => {
           <div className="container p-0 mx-auto flex h-[80vh]  bg-black/10  rounded-lg text-white backdrop-blur-sm border border-gray-400/10 ">
             <Lists />
 
-            <Chats />
-            <ReceiverDetail />
+            {chatId && <Chats />}
+            {chatId && <ReceiverDetail />}
           </div>
           {addMode && (
             <div className="absolute">

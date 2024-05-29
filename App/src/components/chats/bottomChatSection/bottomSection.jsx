@@ -4,20 +4,85 @@ import Camera from "../../../assets/icons/camera.png";
 import Mic from "../../../assets/icons/mic.png";
 import Emoji from "../../../assets/icons/emoji.png";
 import EmojiPicker from "emoji-picker-react";
+import { useUserStore } from "../../../../userStore";
+import { useChatStore } from "../../../../chatStore";
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../../../firebase";
+
 const bottomSection = () => {
+  const { currentUser } = useUserStore();
+  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
+    useChatStore();
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
-  const [messageInput, setMessageInput] = useState("");
+  const [text, setText] = useState("");
+
   const [messageContent, setMessageContent] = useState("");
 
   const toggleEmojiPicker = () => {
     setIsEmojiPickerOpen(!isEmojiPickerOpen);
   };
   const onEmojiClick = (event) => {
-    setMessageInput((prev) => prev + event.emoji);
+    setText((prev) => prev + event.emoji);
     setIsEmojiPickerOpen(false);
   };
-  const messageInputHandler = () => {
-    setMessageInput("");
+  const messageInputHandler = async () => {
+    if (text === "") return;
+
+    let imgUrl = null;
+
+    try {
+      // if (img.file) {
+      //   imgUrl = await upload(img.file);
+      // }
+
+      await updateDoc(doc(db, "chats", chatId), {
+        messages: arrayUnion({
+          senderId: currentUser.id,
+          text,
+          createdAt: new Date(),
+          ...(imgUrl && { img: imgUrl }),
+        }),
+      });
+
+      const userIDs = [currentUser.id, user.id];
+
+      userIDs.forEach(async (id) => {
+        const userChatsRef = doc(db, "userchats", id);
+        const userChatsSnapshot = await getDoc(userChatsRef);
+
+        if (userChatsSnapshot.exists()) {
+          const userChatsData = userChatsSnapshot.data();
+
+          const chatIndex = userChatsData.chats.findIndex(
+            (c) => c.chatId === chatId
+          );
+
+          userChatsData.chats[chatIndex].lastMessage = text;
+          userChatsData.chats[chatIndex].isSeen =
+            id === currentUser.id ? true : false;
+          userChatsData.chats[chatIndex].updatedAt = Date.now();
+
+          await updateDoc(userChatsRef, {
+            chats: userChatsData.chats,
+          });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      // setImg({
+      //   file: null,
+      //   url: "",
+      // });
+
+      setText("");
+    }
   };
 
   return (
@@ -42,10 +107,10 @@ const bottomSection = () => {
       <div className="flex-1">
         <input
           type="text"
-          value={messageInput}
+          value={text}
           placeholder="Enter your msg..."
           className="p-3 border-none outline-none bg-slate-400/10 rounded-lg w-full"
-          onChange={(e) => setMessageInput(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
         />
       </div>
       <div className="flex gap-3 items-center">
