@@ -74,13 +74,22 @@ const userList = () => {
           >
             <div>
               <img
-                src={chat.user.avatar || Avatar}
+                src={
+                  chat.user.blocked.includes(currentUser.id)
+                    ? Avatar
+                    : chat.user.avatar || Avatar
+                }
                 alt="userImage"
                 className=" object-cover rounded-full w-[40px] h-[40px]"
               />
             </div>
             <div className="flex flex-col  gap-2">
-              <div>{chat.user.username}</div>
+              <div>
+                {" "}
+                {chat.user.blocked.includes(currentUser.id)
+                  ? "User"
+                  : chat.user.username}
+              </div>
               <div className="text-xs">{chat.lastMessage}</div>
             </div>
           </div>
