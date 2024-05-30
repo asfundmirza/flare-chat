@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Bg from "../../../assets/icons/bg.jpg";
 import { useChatStore } from "../../../../chatStore";
+import { useUserStore } from "../../../../userStore";
 import {
   arrayUnion,
   doc,
@@ -13,6 +14,7 @@ const msgSection = () => {
   const [chat, setChat] = useState();
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
     useChatStore();
+  const { currentUser } = useUserStore();
   const endMessgesRef = useRef(null);
 
   useEffect(() => {
@@ -34,7 +36,12 @@ const msgSection = () => {
         {/* my own text */}
 
         {chat?.messages?.map((message, idx) => (
-          <div key={idx} className="flex max-w-[50%] w-auto">
+          <div
+            key={idx}
+            className={`flex max-w-[50%] w-auto ${
+              message.senderId === currentUser.id ? "self-end" : ""
+            } `}
+          >
             <div className="flex flex-col gap-4 bg-purple-500/30 p-2  rounded-lg h-auto">
               <div className="flex flex-col">
                 {/* <h2>User name</h2> */}

@@ -14,6 +14,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../../../firebase";
+import upload from "../../../../upload";
 
 const bottomSection = () => {
   const { currentUser } = useUserStore();
@@ -21,8 +22,10 @@ const bottomSection = () => {
     useChatStore();
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const [text, setText] = useState("");
-
-  const [messageContent, setMessageContent] = useState("");
+  const [img, setImg] = useState({
+    file: null,
+    url: "",
+  });
 
   const toggleEmojiPicker = () => {
     setIsEmojiPickerOpen(!isEmojiPickerOpen);
@@ -31,15 +34,23 @@ const bottomSection = () => {
     setText((prev) => prev + event.emoji);
     setIsEmojiPickerOpen(false);
   };
+  const handleImg = (e) => {
+    if (e.target.files[0]) {
+      setImg({
+        file: e.target.files[0],
+        url: URL.createObjectURL(e.target.files[0]),
+      });
+    }
+  };
   const messageInputHandler = async () => {
     if (text === "") return;
 
     let imgUrl = null;
 
     try {
-      // if (img.file) {
-      //   imgUrl = await upload(img.file);
-      // }
+      if (img.file) {
+        imgUrl = await upload(img.file);
+      }
 
       await updateDoc(doc(db, "chats", chatId), {
         messages: arrayUnion({
@@ -76,10 +87,10 @@ const bottomSection = () => {
     } catch (err) {
       console.log(err);
     } finally {
-      // setImg({
-      //   file: null,
-      //   url: "",
-      // });
+      setImg({
+        file: null,
+        url: "",
+      });
 
       setText("");
     }
@@ -88,10 +99,18 @@ const bottomSection = () => {
   return (
     <div className="flex justify-between items-center gap-4 border-t border-slate-400/10 pt-5">
       <div className="flex gap-3 items-center">
-        <img
-          src={Img}
-          alt="Image"
-          className=" w-[20px] h-[20px] cursor-pointer"
+        <label htmlFor="file">
+          <img
+            src={Img}
+            alt="img"
+            className=" w-[20px] h-[20px] cursor-pointer"
+          />
+        </label>
+        <input
+          type="file"
+          id="file"
+          style={{ display: "none" }}
+          onChange={handleImg}
         />
         <img
           src={Camera}
@@ -103,6 +122,13 @@ const bottomSection = () => {
           alt="mic"
           className=" w-[20px] h-[20px] cursor-pointer"
         />
+        {img.file && (
+          <img
+            src={img.url}
+            alt="Selected Image"
+            className="w-12 h-12 rounded-full object-cover object-center"
+          />
+        )}
       </div>
       <div className="flex-1">
         <input

@@ -38,7 +38,27 @@ const userList = () => {
   }, [currentUser.id]);
 
   const handleClick = async (chat) => {
-    changeChat(chat.chatId, chat.user);
+    const userChats = chats.map((item) => {
+      const { user, ...rest } = item;
+      return rest;
+    });
+
+    const chatIndex = userChats.findIndex(
+      (item) => item.chatId === chat.chatId
+    );
+
+    userChats[chatIndex].isSeen = true;
+
+    const userChatsRef = doc(db, "userchats", currentUser.id);
+
+    try {
+      await updateDoc(userChatsRef, {
+        chats: userChats,
+      });
+      changeChat(chat.chatId, chat.user);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -48,7 +68,9 @@ const userList = () => {
           <div
             onClick={() => handleClick(chat)}
             key={chat.chatId}
-            className={`flex bg-slate-400/10 hover:bg-slate-500/30   cursor-pointer p-3 rounded-xl gap-3 items-center`}
+            className={`flex ${
+              chat?.isSeen ? "bg-slate-400/10" : "bg-slate-500/30"
+            }  hover:bg-slate-500/30   cursor-pointer p-3 rounded-xl gap-3 items-center`}
           >
             <div>
               <img
