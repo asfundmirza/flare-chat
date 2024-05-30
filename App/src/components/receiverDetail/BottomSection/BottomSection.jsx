@@ -3,8 +3,34 @@ import ArrowUp from "../../../assets/icons/arrowUp.png";
 import ArrowDown from "../../../assets/icons/arrowDown.png";
 import DloadImg from "../../../assets/icons/bg.jpg";
 import Downloadicon from "../../../assets/icons/download.png";
-
+import { useChatStore } from "../../../../chatStore";
+import { useUserStore } from "../../../../userStore";
+import { arrayUnion, arrayRemove, updateDoc, doc } from "firebase/firestore";
+import { db } from "../../../../firebase";
 const BottomSection = () => {
+  const {
+    chatId,
+    user,
+    isCurrentUserBlocked,
+    isReceiverBlocked,
+    changeBlock,
+    resetChat,
+  } = useChatStore();
+  const { currentUser } = useUserStore();
+  const handleBlock = async () => {
+    if (!user) return;
+
+    const userDocRef = doc(db, "users", currentUser.id);
+
+    try {
+      await updateDoc(userDocRef, {
+        blocked: isReceiverBlocked ? arrayRemove(user.id) : arrayUnion(user.id),
+      });
+      changeBlock();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="flex flex-col mt-4  h-full justify-between">
       <div className="flex flex-col gap-3 ">
@@ -56,8 +82,15 @@ const BottomSection = () => {
         </div>
       </div>
 
-      <button className=" justify-center w-full p-2 bg-red-900/50 hover:bg-red-500 text-center">
-        Block
+      <button
+        onClick={handleBlock}
+        className=" justify-center w-full p-2 bg-red-900/50 hover:bg-red-500 text-center"
+      >
+        {isCurrentUserBlocked
+          ? "You are Blocked!"
+          : isReceiverBlocked
+          ? "User blocked"
+          : "Block User"}
       </button>
     </div>
   );

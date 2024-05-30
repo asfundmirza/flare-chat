@@ -134,7 +134,12 @@ const bottomSection = () => {
         <input
           type="text"
           value={text}
-          placeholder="Enter your msg..."
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
+          placeholder={
+            isCurrentUserBlocked || isReceiverBlocked
+              ? "you cannot send messges "
+              : "Type your message ...."
+          }
           className="p-3 border-none outline-none bg-slate-400/10 rounded-lg w-full"
           onChange={(e) => setText(e.target.value)}
         />
@@ -145,7 +150,12 @@ const bottomSection = () => {
             src={Emoji}
             alt="emoji"
             className="  w-[20px] h-[20px] cursor-pointer"
-            onClick={() => toggleEmojiPicker()}
+            onClick={
+              !(isCurrentUserBlocked || isReceiverBlocked)
+                ? () => toggleEmojiPicker()
+                : null
+            }
+            disabled={isCurrentUserBlocked || isReceiverBlocked}
           />
           <div className=" absolute bottom-[30px] left-[0px] ">
             <EmojiPicker
@@ -157,7 +167,12 @@ const bottomSection = () => {
         </div>
         <button
           onClick={messageInputHandler}
-          className="p-2 px-4 bg-purple-500/30 hover:bg-purple-800 rounded-lg text-sm"
+          className={`p-2 px-4 bg-purple-500/30 ${
+            isCurrentUserBlocked || isReceiverBlocked
+              ? ""
+              : "hover:bg-purple-800"
+          }  rounded-lg text-sm`}
+          disabled={isCurrentUserBlocked || isReceiverBlocked}
         >
           Send
         </button>
