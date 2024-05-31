@@ -72,6 +72,7 @@ const SignUp = () => {
       });
 
       console.log("account created successfully");
+      navigate("/sign-in");
     } catch (error) {
       console.log(error.message);
       setFirebaseError(error.message);
