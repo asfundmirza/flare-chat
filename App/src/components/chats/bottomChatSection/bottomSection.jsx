@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import Img from "../../../assets/icons/img.png";
-import Camera from "../../../assets/icons/camera.png";
-import Mic from "../../../assets/icons/mic.png";
+
 import Emoji from "../../../assets/icons/emoji.png";
 import EmojiPicker from "emoji-picker-react";
 import { useUserStore } from "../../../../userStore";
 import { useChatStore } from "../../../../chatStore";
-import {
-  arrayUnion,
-  doc,
-  getDoc,
-  onSnapshot,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import upload from "../../../../upload";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const bottomSection = () => {
   const { currentUser } = useUserStore();
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
     useChatStore();
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
   const [img, setImg] = useState({
     file: null,
@@ -43,6 +38,7 @@ const bottomSection = () => {
     }
   };
   const messageInputHandler = async () => {
+    setLoading(true);
     if (text === "") return;
 
     let imgUrl = null;
@@ -93,6 +89,7 @@ const bottomSection = () => {
       });
 
       setText("");
+      setLoading(false);
     }
   };
 
@@ -112,16 +109,7 @@ const bottomSection = () => {
           style={{ display: "none" }}
           onChange={handleImg}
         />
-        <img
-          src={Camera}
-          alt="camera"
-          className=" w-[20px] h-[20px] cursor-pointer"
-        />
-        <img
-          src={Mic}
-          alt="mic"
-          className=" w-[20px] h-[20px] cursor-pointer"
-        />
+
         {img.file && (
           <img
             src={img.url}
@@ -174,7 +162,7 @@ const bottomSection = () => {
           }  rounded-lg text-sm`}
           disabled={isCurrentUserBlocked || isReceiverBlocked}
         >
-          Send
+          {loading ? <BeatLoader size={4} color="#060022" /> : "Send"}
         </button>
       </div>
     </div>

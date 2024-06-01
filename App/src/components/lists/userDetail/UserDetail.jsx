@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Avatar from "../../../assets/icons/avatar.png";
 import More from "../../../assets/icons/more.png";
-import Video from "../../../assets/icons/video.png";
-import Edit from "../../../assets/icons/edit.png";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,17 +43,6 @@ const UserDetail = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <img
-          src={Video}
-          alt="video"
-          className="w-[20px] h-[20px] cursor-pointer"
-        />
-
-        <img
-          src={Edit}
-          alt="edit"
-          className="w-[20px] h-[20px] cursor-pointer"
-        />
       </div>
     </div>
   );
