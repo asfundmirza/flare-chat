@@ -3,15 +3,15 @@ import SearchIcon from "../../../assets/icons/search.png";
 import Add from "../../../assets/icons/plus.png";
 import Minus from "../../../assets/icons/minus.png";
 import useStore from "../../../../store";
+import { useChatStore } from "../../../../chatStore";
+
 const Search = () => {
-  const { addUserComponent, setAddUserComponent } = useStore();
-  const [plusButton, setPlusButton] = useState(true);
+  const { setAddMode, addMode } = useStore();
+  const { setSearchInput } = useChatStore();
 
   const addButtonHandler = () => {
-    setPlusButton(!plusButton);
-    setAddUserComponent(!addUserComponent);
+    setAddMode(!addMode);
   };
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center gap-3">
@@ -25,16 +25,17 @@ const Search = () => {
             type="search"
             placeholder="Search"
             className=" bg-transparent border-none outline-none w-full "
+            onChange={(e) => setSearchInput(e.target.value)}
           />
         </div>
         <div
           onClick={addButtonHandler}
           className="bg-slate-400/10 p-2 rounded-lg cursor-pointer"
         >
-          {!addUserComponent ? (
-            <img src={Add} alt="addIcon" className="w-[10px] h-[10px]" />
-          ) : (
+          {addMode ? (
             <img src={Minus} alt="addIcon" className="w-[10px] h-[10px]" />
+          ) : (
+            <img src={Add} alt="addIcon" className="w-[10px] h-[10px]" />
           )}
         </div>
       </div>

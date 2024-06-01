@@ -1,72 +1,61 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Bg from "../../../assets/icons/bg.jpg";
-const msgSection = ({ userData }) => {
+import { useChatStore } from "../../../../chatStore";
+import { useUserStore } from "../../../../userStore";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../../../firebase";
+const msgSection = () => {
+  const [chat, setChat] = useState();
+  const { chatId } = useChatStore();
+  const { currentUser } = useUserStore();
   const endMessgesRef = useRef(null);
-  const friendsArray = userData?.friends;
 
   useEffect(() => {
-    if (friendsArray?.length > 0) {
-      endMessgesRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    endMessgesRef.current.scrollIntoView({ behavior: "smooth" });
   });
+  useEffect(() => {
+    const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
+      setChat(res.data());
+    });
+
+    return () => {
+      unSub();
+    };
+  }, [chatId]);
+
   return (
     <>
-      {friendsArray && friendsArray.length > 0 ? (
-        <div className="flex flex-col gap-8 py-5 px-3 h-full w-full overflow-auto">
-          <div className="flex max-w-[50%] w-auto">
+      <div className="flex flex-col gap-8 py-5 px-3 h-full w-full overflow-auto">
+        {/* my own text */}
+
+        {chat?.messages?.map((message, idx) => (
+          <div
+            key={idx}
+            className={`flex max-w-[50%] w-auto ${
+              message.senderId === currentUser.id ? "self-end" : ""
+            } `}
+          >
             <div className="flex flex-col gap-4 bg-purple-500/30 p-2  rounded-lg h-auto">
               <div className="flex flex-col">
-                <h2>User name</h2>
-                <p className="text-xs break-words">
-                  message content message content message message message
-                  message message message message
-                </p>
+                {/* <h2>User name</h2> */}
+                {message.img && (
+                  <img
+                    src={message.img}
+                    alt="bg image"
+                    className=" object-cover"
+                  />
+                )}
+                <p className="text-xs break-words">{message.text}</p>
               </div>
 
               <div className="">
-                <p className="text-[8px] text-slate-300">1:20 AM</p>
+                {/* <p className="text-[8px] text-slate-300">{message}</p> */}
               </div>
             </div>
           </div>
-          {/* my own text */}
-
-          <div className="flex max-w-[50%] w-auto self-end ">
-            <div className="flex flex-col  gap-4 bg-slate-500/30 p-2  rounded-lg h-auto">
-              <div className="flex flex-col">
-                <h2>Me</h2>
-                <p className="text-xs break-words">
-                  message content message content message contentmessage
-                  contentmessage contentmessage content message content message
-                  content message content message content message content
-                  message content message content message content message
-                  content content content content content content content
-                  content
-                </p>
-              </div>
-
-              <div className="">
-                <p className="text-[8px] text-slate-300">1:20 AM</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex max-w-[50%] w-auto">
-            <div className="flex flex-col gap-4 bg-purple-500/30 p-2  rounded-lg h-auto">
-              <div className="flex flex-col">
-                <h2>User name</h2>
-                <img src={Bg} alt="bg image" className=" object-cover" />
-              </div>
-
-              <div className="">
-                <p className="text-[8px] text-slate-300">1:20 AM</p>
-              </div>
-            </div>
-          </div>
-          <div ref={endMessgesRef} />
-        </div>
-      ) : (
-        <div>Please add friends to start chat</div>
-      )}
+        ))}
+        <div ref={endMessgesRef} />
+      </div>
     </>
   );
 };
