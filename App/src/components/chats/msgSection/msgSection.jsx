@@ -2,18 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Bg from "../../../assets/icons/bg.jpg";
 import { useChatStore } from "../../../../chatStore";
 import { useUserStore } from "../../../../userStore";
-import {
-  arrayUnion,
-  doc,
-  getDoc,
-  onSnapshot,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../../../firebase";
 const msgSection = () => {
   const [chat, setChat] = useState();
-  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
-    useChatStore();
+  const { chatId } = useChatStore();
   const { currentUser } = useUserStore();
   const endMessgesRef = useRef(null);
 

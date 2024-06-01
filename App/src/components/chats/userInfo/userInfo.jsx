@@ -3,7 +3,6 @@ import Avatar from "../../../assets/icons/avatar.png";
 import Phone from "../../../assets/icons/phone.png";
 import Video from "../../../assets/icons/video.png";
 import Info from "../../../assets/icons/info.png";
-import Loader from "react-spinners/BeatLoader";
 import { useChatStore } from "../../../../chatStore";
 const userInfo = () => {
   const { user } = useChatStore();

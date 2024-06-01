@@ -2,7 +2,6 @@ import React from "react";
 import UserInfo from "./userInfo/userInfo";
 import MsgSection from "./msgSection/msgSection";
 import BottomChatSection from "./bottomChatSection/bottomSection";
-import Loader from "react-spinners/BeatLoader";
 
 const Chats = () => {
   return (

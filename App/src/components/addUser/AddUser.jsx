@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import BeatLoader from "react-spinners/BeatLoader";
 import { useUserStore } from "../../../userStore";
 import useStore from "../../../store";
 
@@ -7,7 +6,6 @@ import {
   arrayUnion,
   collection,
   doc,
-  getDoc,
   getDocs,
   query,
   serverTimestamp,

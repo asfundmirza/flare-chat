@@ -10,8 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
 import { auth } from "../../../../firebase";
-import { useNavigate } from "react-router-dom";
-import Loader from "react-spinners/BeatLoader";
+
 import { useUserStore } from "../../../../userStore";
 const UserDetail = () => {
   const { currentUser } = useUserStore();

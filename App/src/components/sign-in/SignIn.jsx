@@ -4,13 +4,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import BeatLoader from "react-spinners/BeatLoader";
-import SignInBG from "../../assets/backgrounds/flare-bg.png";
 import { useUserStore } from "../../../userStore";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pageLoading, setPageLoading] = useState(false);
 
   const [firebaseError, setFirebaseError] = useState("");
   const { isLoading } = useUserStore();

@@ -3,7 +3,6 @@ import UserDetail from "./userDetail/UserDetail";
 import Search from "./searchSection/Search";
 import UserList from "./userList/userList";
 import "./Lists.css";
-import Loader from "react-spinners/BeatLoader";
 
 const Lists = () => {
   return (

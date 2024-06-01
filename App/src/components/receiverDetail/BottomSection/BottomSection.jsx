@@ -8,14 +8,8 @@ import { useUserStore } from "../../../../userStore";
 import { arrayUnion, arrayRemove, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 const BottomSection = () => {
-  const {
-    chatId,
-    user,
-    isCurrentUserBlocked,
-    isReceiverBlocked,
-    changeBlock,
-    resetChat,
-  } = useChatStore();
+  const { user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } =
+    useChatStore();
   const { currentUser } = useUserStore();
   const handleBlock = async () => {
     if (!user) return;

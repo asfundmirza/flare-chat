@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "../../../assets/icons/avatar.png";
-import Loader from "react-spinners/BeatLoader";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { useUserStore } from "../../../../userStore";

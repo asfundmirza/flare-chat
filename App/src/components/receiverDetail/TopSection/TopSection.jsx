@@ -4,15 +4,7 @@ import { useChatStore } from "../../../../chatStore";
 import { useUserStore } from "../../../../userStore";
 
 const TopSection = () => {
-  const {
-    chatId,
-    user,
-    isCurrentUserBlocked,
-    isReceiverBlocked,
-    changeBlock,
-    resetChat,
-  } = useChatStore();
-  const { currentUser } = useUserStore();
+  const { user } = useChatStore();
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col items-center gap-2 border-b border-slate-400/10 ">
