@@ -111,11 +111,7 @@ const SignIn = () => {
                     <p className=" text-white">Sign Up</p>{" "}
                   </Link>
                 </div>
-                <div className="flex justify-center">
-                  <Link to="/forgot-pass">
-                    <p className="text-white font-sans">Forgot Password?</p>
-                  </Link>
-                </div>
+                /
               </div>
             </div>
           )}
