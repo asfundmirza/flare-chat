@@ -17,27 +17,18 @@ const Dashboard = () => {
           <Loader color="silver" className="w-18 h-18" />
         </div> */}
 
-      <div
-        style={{
-          backgroundImage: `url(${DashboardBG})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="relative flex items-center  bg-black/30 backdrop-blur-sm justify-center h-screen">
-          <div className="container p-0 mx-auto flex h-[80vh]  bg-black/10  rounded-lg text-white backdrop-blur-sm border border-gray-400/10 ">
-            <Lists />
+      <div className="relative flex items-center  bg-black/30 backdrop-blur-sm justify-center h-screen">
+        <div className="container p-0 mx-auto flex h-[80vh]  bg-black/10  rounded-lg text-white backdrop-blur-sm border border-gray-400/10 ">
+          <Lists />
 
-            {chatId && <Chats />}
-            {chatId && <ReceiverDetail />}
-          </div>
-          {addMode && (
-            <div className="absolute">
-              <AddUser />
-            </div>
-          )}
+          {chatId && <Chats />}
+          {chatId && <ReceiverDetail />}
         </div>
+        {addMode && (
+          <div className="absolute">
+            <AddUser />
+          </div>
+        )}
       </div>
     </>
   );

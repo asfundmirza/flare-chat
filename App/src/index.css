@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-  background-image: url("./assets/backgrounds/flare-chat-bg.png");
+body {
+  background-image: url("./assets/backgrounds/flare-final.png");
   object-fit: cover;
-
   background-size: cover;
   background-repeat: no-repeat;
-} */
+  background-position: center;
+}
