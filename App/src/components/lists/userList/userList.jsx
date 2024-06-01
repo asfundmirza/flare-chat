@@ -7,7 +7,7 @@ import { useChatStore } from "../../../../chatStore";
 
 const userList = () => {
   const { currentUser } = useUserStore();
-  const { changeChat } = useChatStore();
+  const { changeChat, searchInput } = useChatStore();
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
@@ -59,11 +59,18 @@ const userList = () => {
       console.log(err);
     }
   };
+  const filteredChats = chats?.filter((c) => {
+    if (!searchInput) {
+      return chats;
+    } else {
+      return c?.user?.username.includes(searchInput);
+    }
+  });
 
   return (
     <>
       <div className="flex flex-col gap-2 h-full overflow-auto ">
-        {chats?.map((chat) => (
+        {filteredChats?.map((chat) => (
           <div
             onClick={() => handleClick(chat)}
             key={chat.chatId}

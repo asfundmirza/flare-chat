@@ -4,6 +4,8 @@ import { useUserStore } from "./userStore";
 export const useChatStore = create((set) => ({
   chatId: null,
   setChatID: () => set({ chatId: null }),
+  serchInput: "",
+  setSearchInput: (value) => set({ searchInput: value }),
   user: null,
   isCurrentUserBlocked: false,
   isReceiverBlocked: false,

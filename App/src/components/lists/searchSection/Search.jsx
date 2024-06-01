@@ -3,8 +3,11 @@ import SearchIcon from "../../../assets/icons/search.png";
 import Add from "../../../assets/icons/plus.png";
 import Minus from "../../../assets/icons/minus.png";
 import useStore from "../../../../store";
+import { useChatStore } from "../../../../chatStore";
+
 const Search = () => {
   const { setAddMode, addMode } = useStore();
+  const { setSearchInput } = useChatStore();
 
   const addButtonHandler = () => {
     setAddMode(!addMode);
@@ -22,6 +25,7 @@ const Search = () => {
             type="search"
             placeholder="Search"
             className=" bg-transparent border-none outline-none w-full "
+            onChange={(e) => setSearchInput(e.target.value)}
           />
         </div>
         <div
