@@ -5,7 +5,7 @@ import BottomChatSection from "./bottomChatSection/bottomSection";
 
 const Chats = () => {
   return (
-    <div className="flex flex-col w-1/2 border-l border-slate-400/10 p-5 border-r">
+    <div className="flex flex-col md:w-1/2 w-full border-l border-slate-400/10 p-5 border-r">
       <>
         <UserInfo />
         <MsgSection />

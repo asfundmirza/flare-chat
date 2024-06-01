@@ -4,11 +4,16 @@ import Phone from "../../../assets/icons/phone.png";
 import Video from "../../../assets/icons/video.png";
 import Info from "../../../assets/icons/info.png";
 import { useChatStore } from "../../../../chatStore";
+import { FaArrowLeft } from "react-icons/fa";
+
 const userInfo = () => {
-  const { user } = useChatStore();
+  const { user, setChatID } = useChatStore();
   return (
     <div className="flex justify-between items-center pb-5 border-b border-slate-400/10">
       <div className="flex gap-4 items-center">
+        <div onClick={setChatID}>
+          <FaArrowLeft className="w-[20px] h-[20px] cursor-pointer" />
+        </div>
         <img
           src={user?.avatar || Avatar}
           alt="avatar"
