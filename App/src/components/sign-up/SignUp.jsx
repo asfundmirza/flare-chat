@@ -9,6 +9,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import SignInBG from "../../assets/backgrounds/flare-bg.png";
 import Minus from "../../assets/icons/minus.png";
 import upload from "../../../upload";
+import { useUserStore } from "../../../userStore";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ const SignUp = () => {
   const [firebaseError, setFirebaseError] = useState("");
   const [pageLoading, setPageLoading] = useState(false);
   let navigate = useNavigate();
+  const { fetchUserInfo } = useUserStore();
 
   const register = async () => {
     try {
@@ -72,7 +74,7 @@ const SignUp = () => {
       });
 
       console.log("account created successfully");
-      navigate("/sign-in");
+      fetchUserInfo(userCredential?.user?.uid);
     } catch (error) {
       console.log(error.message);
       setFirebaseError(error.message);
